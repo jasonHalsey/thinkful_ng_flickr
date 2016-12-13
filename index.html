@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="flickrApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Flickr Searcher</title>
+	<!-- styles -->
+	<link href="https://fonts.googleapis.com/css?family=Istok+Web:400,700" rel="stylesheet" type="text/css">
+	<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container" ng-controller="flickrController">
+		<header class="header"><img src="images/flickr-logo.png" height="70px" width="70px"><span class="flickr">Flickr</span><span class="searcher">Searcher</span></header>
+		<div class="input-area">
+			<form name="searchForm" id="form" role="form">
+			<input type="text" name="tagSearch" placeholder="Enter keyword(s)..." maxlength="25" ng-model="tag">
+			<button class="submit-button" type="submit" ng-click="submitForm()">Search</button>
+			</form>
+		</div>
+		<!-- hide & show this div based on whether or not the user has successfully submitted the form with a tag -->
+		<div class="searching" id="searching" ng-show="formSubmitted && searchForm.tagSearch.$valid && searchingMessage"
+			<p>Searching Flickr for photos tagged with: "{{ tag }}"...</p><
+		</div>
+		<hr>
+		<!-- display appropriate message to user per searchFlickr function -->
+		<p class="message" ng-if="formSubmitted">{{ message }}</p><
+		<!-- images go here -->
+		<div class ="imageHolder" ng-repeat="result in results.photos.photo">
+			<img class="flick-pic" ng-src="https://farm{{result.farm}}.staticflickr.com/{{result.server}}//{{result.id}}_{{result.secret}}.jpg">
+			<h3 class="title">User Caption: {{ result.title }}</h3>
+		</div>
+	  	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+	  	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-animate.min.js"></script>
+		<script src="js/app.js"></script>
+	</div>
+</body>
+</html>
