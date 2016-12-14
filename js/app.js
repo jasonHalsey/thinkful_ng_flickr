@@ -4,21 +4,20 @@ var flickrApp = angular.module('flickrApp',['ngAnimate']);
 //main controller for the app
 flickrApp.controller('flickrController', function($scope, $http){
 
-	$scope.formSubmitted = false; //form not submitted when app initialized
-	$scope.message = ""; //no message to display when app initialized
-	$scope.results = []; //array to put our json results in
-	$scope.searchingMessage = false; //boolean to show/hide searching message
+	$scope.formSubmitted = false;
+	$scope.message = ""; 
+	$scope.results = []; 
+	$scope.searchingMessage = false;
 
 	$scope.submitForm = function(){
 		$scope.formSubmitted = true;
 		$scope.searchingMessage = true;
 		var tag = $scope.tag;
 		searchFlickr(tag);
-		console.log('Searched Flickr for: ' + tag);
 	};
 
 	function searchFlickr(tag) {
-        $http({ //pass in the parameters required by Flickr API
+        $http({ 
         	url : "https://api.flickr.com/services/rest",
         	method: 'GET',
         	params: {
@@ -29,18 +28,15 @@ flickrApp.controller('flickrController', function($scope, $http){
         		nojsoncallback: 1
         	}
         }).success(function(response){
-        	console.log("Success!");
-        	console.log(response);
         	$scope.results = response;
-        	if(response.photos.total > 0){ //if there is at least 1 photo found, show this message...
-			$scope.message = "We found " + response.photos.total + " photos with the tag " + tag + ".";
+        	if(response.photos.total > 0){ 
+			$scope.message = "There were " + response.photos.total + " photos with the tag " + tag + ".";
 			$scope.searchingMessage = false;
 			}
-			else { //if there are no photos found, show this message...
-			$scope.message = "Oh no! We couldn't find any photos tagged with " + tag +'.';			
+			else { 
+			$scope.message = "There are no photos tagged with " + tag +'.';			
 			}  
         }).error(function(error){
-        	console.log("Error!");
         	$scope.message = "Error!";
         });
 	};
@@ -50,7 +46,6 @@ flickrApp.controller('flickrController', function($scope, $http){
     	document.getElementById("form").reset();
     	$scope.formSubmitted = false;
     	$scope.results = [];
-    	console.log("Reset!");
     }       
 });
 
